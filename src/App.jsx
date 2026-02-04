@@ -1,37 +1,84 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
-import { ApiTest } from "./components/apitest/apitest.jsx";
 
-function App() {
-  const [count, setCount] = useState(0);
+const ProtectedArea = () => {
+  return (
+    <div style={{ marginTop: 24, padding: 16, border: "1px solid #ddd" }}>
+      <h2>Dashboard (Protected)</h2>
+      <p>If you can see this, you’re logged in.</p>
+    </div>
+  );
+};
+
+const App = () => {
+  const { isLoading, isAuthenticated, loginWithRedirect, logout, user } =
+    useAuth0();
+
+  const handleSignup = async () => {
+    await loginWithRedirect({
+      authorizationParams: {
+        screen_hint: "signup",
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+        scope: "openid profile email",
+      },
+    });
+  };
+
+  const handleLogin = async () => {
+    await loginWithRedirect({
+      authorizationParams: {
+        audience: import.meta.env.VITE_AUTH0_AUDIENCE,
+        scope: "openid profile email",
+      },
+    });
+  };
+
+  const handleLogout = () => {
+    logout({ logoutParams: { returnTo: window.location.origin } });
+  };
 
   return (
     <>
-      <div>
-        <a href='https://vite.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
+      <h1>MyGolf</h1>
+
+      {/* Auth buttons */}
+      <div
+        style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}
+      >
+        {!isAuthenticated && (
+          <>
+            <button onClick={handleSignup} disabled={isLoading}>
+              Sign up
+            </button>
+            <button onClick={handleLogin} disabled={isLoading}>
+              Log in
+            </button>
+          </>
+        )}
+
+        {isAuthenticated && (
+          <>
+            <button onClick={handleLogout} disabled={isLoading}>
+              Log out
+            </button>
+            <span style={{ alignSelf: "center" }}>
+              Logged in as <b>{user?.email || user?.name}</b>
+            </span>
+          </>
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+
+      {/* Protected area */}
+      {!isLoading && isAuthenticated && <ProtectedArea />}
+
+      {!isLoading && !isAuthenticated && (
+        <p style={{ marginTop: 16 }}>
+          This is the public landing page. Sign up or log in to access the
+          dashboard.
         </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-      <ApiTest />
+      )}
     </>
   );
-}
+};
 
 export default App;

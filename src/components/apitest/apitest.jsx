@@ -29,13 +29,27 @@ export function ApiTest() {
         },
       });
 
-      const res = await fetch("https://localhost:7296/api/test/users", {
+      const res = await fetch("https://localhost:7296/api/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log(await res.json());
+      const contentType = res.headers.get("content-type") ?? "";
+      const text = await res.text();
+
+      console.log("Status:", res.status, res.statusText);
+      console.log("Body:", text);
+
+      if (!res.ok) {
+        throw new Error(`API ${res.status}: ${text || "(empty body)"}`);
+      }
+
+      const data =
+        contentType.includes("application/json") && text
+          ? JSON.parse(text)
+          : text;
+
+      console.log("Parsed:", data);
     } catch (e) {
-      // If silent token fetch fails, force interactive login
       if (e?.error === "login_required") {
         await loginWithRedirect({
           authorizationParams: {
