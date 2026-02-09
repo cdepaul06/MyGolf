@@ -79,7 +79,8 @@ const myGolfTheme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 16,
+          // * This was causing the GolfAppBar to have rounded corners, so commented out for now.
+          //   borderRadius: 16,
         },
       },
     },

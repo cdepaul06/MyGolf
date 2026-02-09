@@ -10,10 +10,21 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import myGolfTheme from "./theme/myGolfTheme.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const domain = import.meta.env.VITE_AUTH0_DOMAIN;
 const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
 const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000,
+    },
+  },
+});
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -27,10 +38,13 @@ createRoot(document.getElementById("root")).render(
       useRefreshTokens={true}
       cacheLocation='memory'
     >
-      <ThemeProvider theme={myGolfTheme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={myGolfTheme}>
+          <CssBaseline />
+
+          <App />
+        </ThemeProvider>
+      </QueryClientProvider>
     </Auth0Provider>
   </StrictMode>,
 );
