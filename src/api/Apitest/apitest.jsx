@@ -29,9 +29,12 @@ export function ApiTest() {
         },
       });
 
-      const res = await fetch("https://localhost:7296/api/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_MYGOLF_BASE_API_URL}users/me`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
 
       const contentType = res.headers.get("content-type") ?? "";
       const text = await res.text();

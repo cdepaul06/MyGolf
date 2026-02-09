@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Button from "@mui/material/Button";
 import Dashboard from "../Dashboard/Dashboard";
 
-export default function LandingPage() {
+const LandingPage = ({}) => {
   const { isLoading, isAuthenticated, loginWithRedirect, logout, user } =
     useAuth0();
 
@@ -30,7 +30,7 @@ export default function LandingPage() {
     logout({ logoutParams: { returnTo: window.location.origin } });
   }, [logout]);
 
-  // ✅ Key: handle loading first so you don't show landing for returning users while Auth0 boots
+  // ! Replace this with a proper loading component
   if (isLoading) {
     return (
       <div className='bg-green-50 min-w-screen min-h-screen flex items-center justify-center'>
@@ -39,12 +39,12 @@ export default function LandingPage() {
     );
   }
 
-  // ✅ If authenticated, go straight to dashboard
+  // If authenticated, go straight to dashboard
   if (isAuthenticated) {
     return <Dashboard user={user} onLogout={handleLogout} />;
   }
 
-  // ✅ Otherwise show the public landing page
+  // Otherwise show the public landing page
   return (
     <div className='bg-green-50 min-w-screen min-h-screen relative'>
       <div className='absolute top-0 right-0 p-4 flex justify-end gap-2'>
@@ -69,4 +69,6 @@ export default function LandingPage() {
       </div>
     </div>
   );
-}
+};
+
+export default LandingPage;
