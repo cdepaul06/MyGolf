@@ -68,15 +68,14 @@ const SearchClearButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const GolfAppBar = ({ user: { picture } }) => {
+const GolfAppBar = ({ onMenuClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const { logout } = useAuth0();
+  const { logout, user } = useAuth0();
 
   const handleProfileMenuOpen = useCallback((event) => {
     setAnchorEl(event.currentTarget);
@@ -158,29 +157,27 @@ const GolfAppBar = ({ user: { picture } }) => {
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        {/* <IconButton
-          size='large'
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'
-        > */}
-        <Avatar alt='User Avatar' src={picture} />
-        {/* </IconButton> */}
-        <p>Profile</p>
+        <Avatar
+          alt='User Avatar'
+          style={{ marginLeft: "0.7rem" }}
+          sx={{ width: 24, height: 24 }}
+          src={user?.picture}
+        />
+        <p style={{ marginLeft: "0.8rem" }}>Profile</p>
       </MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
           <IconButton
             size='large'
             edge='start'
             color='inherit'
             aria-label='open drawer'
+            onClick={onMenuClick}
             sx={{ mr: 2 }}
           >
             <MenuIcon />
@@ -244,7 +241,7 @@ const GolfAppBar = ({ user: { picture } }) => {
               <Avatar
                 sx={{ width: 24, height: 24 }}
                 alt='User Avatar'
-                src={picture}
+                src={user?.picture}
               />
             </IconButton>
           </Box>
