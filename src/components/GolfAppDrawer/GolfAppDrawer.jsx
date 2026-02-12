@@ -6,17 +6,18 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SportsGolfIcon from "@mui/icons-material/SportsGolf";
+import GolfCourseIcon from "@mui/icons-material/GolfCourse";
 import MapIcon from "@mui/icons-material/Map";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 const navItems = [
   { to: "/app/dashboard", label: "Dashboard", icon: <DashboardIcon /> },
-  { to: "/app/rounds", label: "Rounds", icon: <SportsGolfIcon /> },
+  { to: "/app/clubs", label: "Clubs", icon: <SportsGolfIcon /> },
+  { to: "/app/rounds", label: "Rounds", icon: <GolfCourseIcon /> },
   { to: "/app/courses", label: "Courses", icon: <MapIcon /> },
   { to: "/app/settings", label: "Settings", icon: <SettingsIcon /> },
 ];

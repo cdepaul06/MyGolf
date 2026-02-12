@@ -25,21 +25,20 @@ const AppShell = ({}) => {
   const handleToggle = useCallback(() => setOpen((v) => !v), []);
   const handleClose = useCallback(() => setOpen(false), []);
 
+  const onNavigateMobile = useCallback(() => {
+    if (!isDesktop) setOpen(false);
+  }, [isDesktop]);
+
   return (
     <Box sx={{ display: "flex" }}>
-      <GolfAppBar
-        onMenuClick={handleToggle}
-      />
+      <GolfAppBar onMenuClick={handleToggle} />
 
       <GolfAppDrawer
         open={open}
         onClose={handleClose}
         drawerWidth={drawerWidth}
         variant={isDesktop ? "persistent" : "temporary"}
-        onNavigate={() => {
-          // close drawer after selecting a nav item on mobile
-          if (!isDesktop) handleClose();
-        }}
+        onNavigate={onNavigateMobile}
       />
 
       <Box
