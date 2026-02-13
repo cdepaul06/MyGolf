@@ -11,6 +11,8 @@ import ClubsPage from "./pages/ClubsPage";
 import RoundsPage from "./pages/RoundsPage";
 import CoursesPage from "./pages/CoursesPage";
 import SettingsPage from "./pages/SettingsPage";
+import ProfilePage from "./pages/ProfilePage";
+import AccountPage from "./pages/AccountPage";
 
 import "./App.css";
 
@@ -26,6 +28,8 @@ const App = ({}) => {
           <Route path='rounds' element={<RoundsPage />} />
           <Route path='courses' element={<CoursesPage />} />
           <Route path='settings' element={<SettingsPage />} />
+          <Route path='profile' element={<ProfilePage />} />
+          <Route path='account' element={<AccountPage />} />
         </Route>
 
         <Route path='*' element={<Navigate to='/' replace />} />

@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import GolfAppBar from "../GolfAppBar/GolfAppBar.jsx";
 import GolfAppDrawer from "../GolfAppDrawer/GolfAppDrawer.jsx";
 
-const drawerWidth = 260;
+const DRAWER_WIDTH = 260;
 
 const AppShell = ({}) => {
   const theme = useTheme();
@@ -36,7 +36,7 @@ const AppShell = ({}) => {
       <GolfAppDrawer
         open={open}
         onClose={handleClose}
-        drawerWidth={drawerWidth}
+        drawerWidth={DRAWER_WIDTH}
         variant={isDesktop ? "persistent" : "temporary"}
         onNavigate={onNavigateMobile}
       />
@@ -47,7 +47,7 @@ const AppShell = ({}) => {
           flexGrow: 1,
           p: 3,
           // only shift content when drawer is persistent
-          ml: isDesktop && open ? `${drawerWidth}px` : 0,
+          ml: isDesktop && open ? `${DRAWER_WIDTH}px` : 0,
           transition: (t) =>
             t.transitions.create("margin-left", {
               easing: t.transitions.easing.sharp,

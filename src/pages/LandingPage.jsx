@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 
-const LandingPage = () => {
+const LandingPage = ({}) => {
   const { isLoading, isAuthenticated, loginWithRedirect } = useAuth0();
 
   const handleSignup = useCallback(async () => {

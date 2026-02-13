@@ -2,6 +2,7 @@
  * @typedef {Object} UserReadDto
  * @property {number} id
  * @property {string} username
+ * @property {string} normalizedUsername
  * @property {string} email
  * @property {string|null|undefined} firstName
  * @property {string|null|undefined} lastName
